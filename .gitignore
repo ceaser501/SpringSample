@@ -1,0 +1,13 @@
+# IntelliJ
+out/
+
+### Java-Web ###
+## ignoring target file
+target/
+
+# Directories #
+.idea/
+.idea/**/libraries
+
+# maven lib
+lib/
