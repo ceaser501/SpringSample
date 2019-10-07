@@ -12,11 +12,6 @@
 	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor" level="DEBUG" />
 	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN" />
 
-	<root level="DEBUG">
-		<appender-ref ref="STDOUT" />
-	</root>
-
-
 	<!-- 서버에 로그파일 남기기 -->
 	<property name="LOG_DIR" value="c:\\logs\\" />
 
@@ -65,6 +60,7 @@
 	<logger name="com.github.ziplet.filter.compression" level="INFO" />
 
 	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
 		<appender-ref ref="DEBUG_FILE_LOG" />
 		<appender-ref ref="ERR_FILE_LOG" />
 	</root>

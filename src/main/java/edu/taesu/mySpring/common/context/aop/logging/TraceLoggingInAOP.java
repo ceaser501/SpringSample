@@ -25,7 +25,7 @@ public class TraceLoggingInAOP {
 	private static final String STR_START_EXECUTE_TIME = "{} START ....... Execute Time ....... : {}";
 	private static final String STR_END_EXECUTE_TIME = "{} E N D ....... Execute Time ....... : {} - return Value({}) : {}";
 
-	@Around("execution(* com.mybrainfficial.myproject..*Controller.*(..)) || execution(* com.mybrainfficial.myproject..*Service.*(..)) || execution(* com.mybrainfficial.myproject..*DAO.*(..))")
+	@Around("execution(* edu.taesu.mySpring..*Controller.*(..)) || execution(* edu.taesu.mySpring..*Service.*(..)) || execution(* edu.taesu.mySpring..*DAO.*(..))")
 	public Object doLoggingAround(final ProceedingJoinPoint pjp) throws Throwable {
 		Object retVal = null;
 
