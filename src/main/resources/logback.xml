@@ -53,6 +53,7 @@
 	<logger name="org.jdbcdslog.StatementLogger" level="INFO" />
 	<logger name="org.jdbcdslog.ResultSetLogger" level="INFO" />
 	<logger name="com.github.ziplet.filter.compression" level="INFO" />
+
 	<root>
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ERR_FILE_LOG" />
