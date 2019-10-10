@@ -9,7 +9,7 @@
 	</appender>
 
 	<!-- 서버에 로그파일 남기기 -->
-	<property name="LOG_DIR" value="/Users/joony/test" />
+	<property name="LOG_DIR" value="/Users/TAESU/test" />
 
 	<appender name="DEBUG_FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_DIR}/debuglog.log</file>
@@ -24,6 +24,7 @@
 			<pattern>%d{HH:mm:ss.SSS} [%-5level] %logger.%method\(%line\) === %msg%n</pattern>
 		</encoder>
 	</appender>
+
 	<appender name="ERR_FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>WARN</level>
@@ -44,17 +45,13 @@
 	<logger name="org.springframework" level="INFO" />
 	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor" level="DEBUG" />
 	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN" />
-
 	<logger name="org.apache.ibatis" level="INFO" />
 	<logger name="org.apache.commons.beanutils" level="INFO" />
-
 	<logger name="org.mybatis.spring" level="INFO" />
-
 	<logger name="com.zaxxer.hikari.pool" level="INFO" />
 	<logger name="org.jdbcdslog" level="INFO" />
 	<logger name="org.jdbcdslog.StatementLogger" level="INFO" />
 	<logger name="org.jdbcdslog.ResultSetLogger" level="INFO" />
-
 	<logger name="com.github.ziplet.filter.compression" level="INFO" />
 
 	<root>
