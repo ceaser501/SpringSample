@@ -21,14 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class HomeController {
-	
-	// ±âº»Çü
+
+	// ï¿½âº»ï¿½ï¿½
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-		
-	// staticÇü
+
+	// staticï¿½ï¿½
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -37,17 +36,17 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		logger.debug("debug test");
 		logger.error("error test");
-		
+
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
+
 		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
+
+		model.addAttribute("serverTime", formattedDate);
+
+		return "testTable/testTable";
 	}
-	
+
 	@RequestMapping(value = "/getList", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public List<String> getData() {
@@ -62,7 +61,7 @@ public class HomeController {
 	@ResponseBody
 	public Map<String, String> getMap() {
 		Map<String, String> result = new HashMap<>();
-		
+
 		result.put("first", "firstValue");
 		result.put("second", "secondValue");
 		result.put("third", "thirdValue");
