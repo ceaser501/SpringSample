@@ -1,4 +1,4 @@
-package edu.taesu.mySpring.testTable;
+package edu.taesu.myspring.testTable;
 
 import java.util.List;
 
@@ -10,8 +10,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TestTableDAO {
+	
 	@Autowired
 	private SqlSession sqlSession;
+	
 	// end must be point .
 	private static final String NS = TestTableDAO.class.getPackage().getName() + ".";
 

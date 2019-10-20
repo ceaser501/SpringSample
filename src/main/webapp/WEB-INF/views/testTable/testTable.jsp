@@ -90,6 +90,7 @@
 </head>
 <body>
 	<div class="container">
+		<img src="<c:url value='/resources/img/logo.png' />" width="70px" height="60px" style="float:left;"/>
 		<h2>TEST_TABLE</h2>
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-hover">

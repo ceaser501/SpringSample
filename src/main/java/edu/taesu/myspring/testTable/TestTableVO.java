@@ -1,4 +1,4 @@
-package edu.taesu.mySpring.testTable;
+package edu.taesu.myspring.testTable;
 
 import java.io.Serializable;
 

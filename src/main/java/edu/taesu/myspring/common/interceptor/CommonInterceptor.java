@@ -1,4 +1,4 @@
-package edu.taesu.mySpring.common.interceptor;
+package edu.taesu.myspring.common.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        logger.info("인터셉터 테스트");
+    	
         if (logger.isDebugEnabled()) {
             logger.debug("===================       START       ===================");
             logger.debug(" Request URI \t:  " + request.getRequestURI());
@@ -30,3 +30,5 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
         }
     }
 }
+
+

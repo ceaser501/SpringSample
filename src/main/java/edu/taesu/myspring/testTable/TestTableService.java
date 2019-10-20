@@ -1,14 +1,15 @@
-package edu.taesu.mySpring.testTable;
+package edu.taesu.myspring.testTable;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TestTableService {
-	@Autowired
+	@Resource
 	private TestTableDAO testTableDAO;
 
 	public List<TestTableVO> getTestTableList(final TestTableVO vo) throws DataAccessException {

@@ -1,4 +1,4 @@
-package edu.taesu.mySpring.common.context.aop.logging;
+package edu.taesu.myspring.common.context.aop.logging;
 
 
 import java.text.MessageFormat;
@@ -25,7 +25,7 @@ public class TraceLoggingInAOP {
 	private static final String STR_START_EXECUTE_TIME = "{} START ....... Execute Time ....... : {}";
 	private static final String STR_END_EXECUTE_TIME = "{} E N D ....... Execute Time ....... : {} - return Value({}) : {}";
 
-	@Around("execution(* edu.taesu.mySpring..*Controller.*(..)) || execution(* edu.taesu.mySpring..*Service.*(..)) || execution(* edu.taesu.mySpring..*DAO.*(..))")
+	@Around("execution(* edu.taesu.myspring..*Controller.*(..)) || execution(* edu.taesu.myspring..*Service.*(..)) || execution(* edu.taesu.myspring..*DAO.*(..))")
 	public Object doLoggingAround(final ProceedingJoinPoint pjp) throws Throwable {
 		Object retVal = null;
 
