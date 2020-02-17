@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="edu.taesu.myspring.userInfo">
+	<select id="selectUserInfo" parameterType="UserInfoVO" resultType="UserInfoVO">
+		  SELECT USER_ID,
+			     USER_PW,
+			     USER_NM,
+			     USER_EMAIL,
+		         USER_POINT,
+			     SESSION_KEY,
+			     SESSION_LIMIT,
+		         REG_DATE,
+			     USER_JOIN_DATE,
+			     USER_LOGIN_DATE,
+			     USER_INTRO
+		    FROM TBL_USER
+		 <where>
+		     <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userId )'>
+		     AND USER_ID = #{userId, jdbcType=VARCHAR}
+		     </if>
+		</where>
+	</select>
+
+	<insert id="insertUserInfo" parameterType="UserInfoVO" >
+		  INSERT INTO TBL_USER(
+			 	USER_ID,
+			    USER_PW,
+			    USER_NM,
+			    USER_EMAIL,
+			    USER_POINT,
+			    SESSION_KEY,
+			    SESSION_LIMIT,
+			    REG_DATE,
+			    USER_JOIN_DATE,
+			    USER_LOGIN_DATE,
+			    USER_INTRO
+          ) VALUES(
+		  	 #{userId, jdbcType=VARCHAR},
+		  	 #{userPw, jdbcType=VARCHAR},
+		  	 #{userNm, jdbcType=VARCHAR},
+		  	 #{userEmail, jdbcType=VARCHAR},
+		  	 #{userPoint, jdbcType=INTEGER},
+		  	 #{sessionKey, jdbcType=VARCHAR},
+		  	 #{sessionLimit, jdbcType=VARCHAR},
+		  	 SYSDATE,
+		  	 SYSDATE,
+		  	 SYSDATE,
+		  	 #{userIntro, jdbcType=VARCHAR}
+		  )
+	</insert>
+
+
+	<update id="updateUserInfo" parameterType="UserInfoVO" >
+		  UPDATE TBL_USER
+		    <set>
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userNm )'>
+					USER_NM = #{userNm, jdbcType=VARCHAR},
+			    </if>
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userEmail )'>
+					USER_EMAIL = #{userEmail, jdbcType=VARCHAR},
+			    </if>
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userPw )'>
+					USER_PW = #{userPw, jdbcType=VARCHAR},
+			    </if>
+				<if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userIntro )'>
+					USER_INTRO = #{userIntro, jdbcType=VARCHAR},
+				</if>
+		    </set>
+		   <where>
+		     AND USER_ID = #{userId, jdbcType=VARCHAR}
+		   </where>
+	</update>
+
+	<delete id="deleteUserInfo" parameterType="UserInfoVO" >
+		  DELETE FROM TBL_USER
+		   <where>
+		     AND USER_ID = #{userId, jdbcType=VARCHAR}
+		   </where>
+	</delete>
+</mapper>

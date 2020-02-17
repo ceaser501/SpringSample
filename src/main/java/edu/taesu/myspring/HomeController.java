@@ -17,23 +17,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
 
-	// �⺻��
+	// normal
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	// static��
+	// static
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String login(Locale locale, Model model) {
+		
+		return "/user/login";
+	}
+	
+	@RequestMapping(value = "/user/home", method = RequestMethod.GET)
+	public String home(Locale locale, HttpSession session, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		logger.debug("debug test");
 		logger.error("error test");
@@ -44,12 +52,13 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 
 		model.addAttribute("serverTime", formattedDate);
+		model.addAttribute("login", session.getAttribute("login"));
 
-		return "testTable/testTable";
+		return "/home";
 	}
+	
 
 	@RequestMapping(value = "/getList", method = { RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
 	public List<String> getData() {
 		List<String> result = new ArrayList<>();
 		result.add("first");
