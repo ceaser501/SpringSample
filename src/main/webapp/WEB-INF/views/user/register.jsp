@@ -7,7 +7,7 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="${path}/">
+        <a href="/">
             <b>Spring Sample</b>
         </a>
     </div>
@@ -15,7 +15,7 @@
     <div class="register-box-body">
         <p class="login-box-msg">회원가입 페이지</p>
 
-        <form action="${path}/user/register" method="post">
+        <form role="form" id="userInfoRegForm" name="userInfoRegForm">
             <div class="form-group has-feedback">
                 <input type="text" name="userId" class="form-control" placeholder="아아디">
                 <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
@@ -45,15 +45,15 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <button type="button" class="btn btn-danger btn-block btn-sm">약관보기 &nbsp; <a href="#"></a></button>
+                    <button type="button" class="btn btn-danger btn-block btn-sm"> 약관보기 &nbsp; <a href="#"></a></button>
                 </div>
             </div>
-            
+
             <div class="row">
             	<div class="col-xs-8">
             	</div>
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-sm">가입</button>
+                    <button type="button" id="regBtn" class="btn btn-primary btn-block btn-sm">가입</button>
                 </div>
             </div>
         </form>
@@ -68,7 +68,7 @@
             </a>
         </div>
 
-        <a href="${path}/user/login" class="text-center">로그인</a>
+        <a href="/user/login" class="text-center">로그인</a>
     </div>
     <!-- /.form-box -->
 </div>
@@ -77,6 +77,40 @@
 <%@ include file="../include/plugin_js.jsp" %>
 
 <script>
+    $(document).ready(function () {
+        $('#regBtn').on('click', function () {
+            if(goValidation()){
+                $.ajax({
+                    url: '/user/register',
+                    type: 'POST',
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    data: $("#userInfoRegForm").serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        alert(data.resultMsg);
+
+                        if(data.resultCd == "0000"){
+                            window.location.href="/user/login";
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    function goValidation(){
+        var flag = true;
+
+        var agreeFlag = $("input:checkbox[id='contConfirm']").is(":checked");
+
+        if( !agreeFlag ){
+            alert("약관에 동의하여 주십시오.");
+            flag = false;
+        }
+
+        return flag;
+    }
+
     $(function () {
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',

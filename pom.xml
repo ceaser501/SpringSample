@@ -32,14 +32,14 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-				
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
-		</dependency>	
-		
+		</dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -64,7 +64,7 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-				
+
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -83,37 +83,37 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
-		
+		</dependency>
+
 		<!-- aop-Logging 사용관련 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>
-		
+
 		<!-- gson, json -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-lang3</artifactId>
 		    <version>3.9</version>
 		</dependency>
-		
-		
+
+
 		<!-- mybatis + oracle -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -131,14 +131,14 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-		
+
 		<!-- db connection pool 이용 -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-		
+
 		<!-- jdbc -->
 		<dependency>
 			<groupId>oracle.jdbc</groupId>
@@ -147,27 +147,27 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ojdbc7.jar</systemPath>
 		</dependency>
-			
-		
+
+
 		<!-- MappingJacksonJsonView -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.jackson</groupId>-->
+<!--            <artifactId>jackson-mapper-asl</artifactId>-->
+<!--            <version>1.9.13</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-core-asl</artifactId>
-            <version>1.9.13</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.jackson</groupId>-->
+<!--            <artifactId>jackson-core-asl</artifactId>-->
+<!--            <version>1.9.13</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.9.7</version>
-        </dependency>
-        
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-core</artifactId>-->
+<!--            <version>2.9.7</version>-->
+<!--        </dependency>-->
+
         <!-- sql log util -->
 		<dependency>
 			<groupId>org.jdbcdslog</groupId>
@@ -175,12 +175,12 @@
 			<version>2.1</version>
 		</dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.7</version>
-        </dependency>
-        
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-databind</artifactId>-->
+<!--            <version>2.9.7</version>-->
+<!--        </dependency>-->
+
         <!-- db pw 암호화 -->
         <dependency>
         	<groupId>org.mindrot</groupId>
@@ -188,7 +188,7 @@
         	<version>0.4</version>
         </dependency>
 	</dependencies>
-	
+
     <build>
         <plugins>
             <plugin>

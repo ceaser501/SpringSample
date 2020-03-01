@@ -6,15 +6,16 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="${path}/">
+        <a href="/">
             <b>Spring Sample</b>
         </a>
     </div>
     <!-- /.login-logo -->
+
     <div class="login-box-body">
         <p class="login-box-msg">로그인 페이지</p>
 
-        <form action="${path}/user/login" method="post">
+        <form action="/user/login" method="post">
             <div class="form-group has-feedback">
                 <input type="text" name="userId" class="form-control" placeholder="아아디">
                 <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
@@ -52,18 +53,18 @@
         </div>
         <!-- /.social-auth-links -->
 
-		<br>
-		<div class="row">
+        <br>
+        <div class="row">
             <div class="col-xs-6">
                 <a href="#" class="btn btn-block btn-primary btn-flat">
-                	<i class="fa fa-search"></i> 비밀번호 찾기
-            	</a>
+                    <i class="fa fa-search"></i> 비밀번호 찾기
+                </a>
             </div>
             <!-- /.col -->
             <div class="col-xs-6">
                 <a href="/user/register" class="btn btn-block btn-primary btn-flat">
-                	<i class="fa fa-plus"></i> 회원가입
-           	 	</a>
+                    <i class="fa fa-plus"></i> 회원가입
+                </a>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 package edu.taesu.myspring.userInfo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserInfoVO implements Serializable {
 
@@ -12,9 +13,13 @@ public class UserInfoVO implements Serializable {
 	private String sessionKey;
 	private String sessionLimit;
 	private String regDate;
+	private String modDate;
 	private String userJoinDate;
 	private String userLoginDate;
 	private String userIntro;
+	private Date initDate;
+	private Integer failCnt;
+	private String lockFlag;
 
 	public String getUserId() {
 		return userId;
@@ -76,4 +81,36 @@ public class UserInfoVO implements Serializable {
 	}
 	public String getUserIntro() {return userIntro; }
 	public void setUserIntro(String userIntro) { this.userIntro = userIntro; }
+
+	public void setModDate(String modDate) {
+		this.modDate = modDate;
+	}
+
+	public String getModDate() {
+		return modDate;
+	}
+
+	public void setFailCnt(Integer failCnt) {
+		this.failCnt = failCnt;
+	}
+
+	public Integer getFailCnt() {
+		return failCnt;
+	}
+
+	public void setInitDate(Date initDate) {
+		this.initDate = initDate;
+	}
+
+	public Date getInitDate() {
+		return initDate;
+	}
+
+	public void setLockFlag(String lockFlag) {
+		this.lockFlag = lockFlag;
+	}
+
+	public String getLockFlag() {
+		return lockFlag;
+	}
 }

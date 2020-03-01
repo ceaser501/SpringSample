@@ -6,7 +6,7 @@ public class ResultVO implements Serializable {
 
 	private String resultCd;
 	private String resultMsg;
-	private String resultFlag;
+	private boolean resultFlag;
 
     public void setResultCd(String resultCd) {
         this.resultCd = resultCd;
@@ -16,11 +16,11 @@ public class ResultVO implements Serializable {
         return resultCd;
     }
 
-    public void setResultFlag(String resultFlag) {
+    public void setResultFlag(boolean resultFlag) {
         this.resultFlag = resultFlag;
     }
 
-    public String getResultFlag() {
+    public boolean getResultFlag() {
         return resultFlag;
     }
 

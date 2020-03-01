@@ -7,7 +7,7 @@
 <header class="main-header">
 
     <%-- Logo --%>
-    <a href="/" class="logo">
+    <a href="/user/home" class="logo">
         <%-- mini logo for sidebar mini 50x50 pixels --%>
         <span class="logo-mini"><b>M</b>B</span>
         <%-- logo for regular state and mobile devices --%>
@@ -55,7 +55,7 @@
                                             class="fa fa-info-circle"></i><b> 내 프로필</b></a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="${path}/user/logout" class="btn btn-default btn-flat"><i
+                                    <a href="/user/logout" class="btn btn-default btn-flat"><i
                                             class="glyphicon glyphicon-log-out"></i><b> 로그아웃</b></a>
                                 </div>
                             </li>

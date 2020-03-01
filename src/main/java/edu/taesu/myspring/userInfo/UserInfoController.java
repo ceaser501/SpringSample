@@ -1,18 +1,26 @@
 package edu.taesu.myspring.userInfo;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.taesu.myspring.ResultVO;
+import edu.taesu.myspring.common.commonUtil.MessageUtil;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -38,15 +46,123 @@ public class UserInfoController {
 
 	// 로그인
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
-	public void getUserInfo(UserInfoVO vo, HttpSession httpSession, Model model) {
+	public void getUserInfo(UserInfoVO vo, HttpSession httpSession, Model model, HttpServletResponse response) {
 
-		UserInfoVO userInfo = UserInfoService.selectUserInfo(vo);
+		String resultMsg = "";
+		String resultCode = "";
+		String lockFlag = "";
+		String failCntFlag = "";
+		int userFailCnt = 0;
 
-		if(vo == null || !BCrypt.checkpw(vo.getUserPw(), userInfo.getUserPw())) {
-			return;
+		try{
+			UserInfoVO userInfo = UserInfoService.selectUserInfo(vo);
+
+			// 로그인 계정 체크
+		/*
+			CASE 1. (9999) 사용자 정보가 없는 경우
+			CASE 2. (9998) 사용자 패스워드가 틀린 경우
+			CASE 3. (9997) 패스워드 초기화 일자가 60일이상 지난 경우 > ALERT ALAM 발생 후, LOGIN 성공
+			CASE 4. (9996) 패스워드 초기화 일자가 90일이상 지난 경우 > ALERT ALAM 발생 후, 패스워드 변경 화면 이동
+			CASE 5. (9995) 패스워드 실패 횟수가 5회 이상인 경우 > ALERT ALAM 발생 후, 계정 잠김
+			CASE 6. (0000) 로그인 정상 성공 (패스워드 실패 횟수 초기화)
+		 */
+
+			if(userInfo == null){
+				resultCode = "9999";
+				resultMsg = "사용자 정보가 없습니다";
+			}else{
+				// 현재 시각 timestamp
+				LocalDateTime currentDateTime = LocalDateTime.now();
+				Timestamp timestamp = Timestamp.valueOf(currentDateTime);
+
+				long nowTimeStamp = timestamp.getTime();
+
+				// db initday timestamp
+				long dbInitTimeStamp = userInfo.getInitDate().getTime();
+
+				Calendar cal = Calendar.getInstance();
+
+				// DB 저장된 초기화 일자보다 60일 이후 timestamp
+				cal.setTimeInMillis(dbInitTimeStamp);
+				cal.add(Calendar.DAY_OF_MONTH, 60);
+				long sixtyDaysAfterDbInitTimestamp = cal.getTime().getTime();
+
+				// DB 저장된 초기화 일자보다 90일 이후 timestamp
+				cal.add(Calendar.DAY_OF_MONTH, 30);
+				long nintyDaysAfterDbInitTimestamp = cal.getTime().getTime();
+
+//				SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+//				int initDate1 =  Integer.parseInt(formatter.format(nowTimeStamp));
+
+				userFailCnt = userInfo.getFailCnt();
+
+				if(!BCrypt.checkpw(vo.getUserPw(), userInfo.getUserPw())) {
+					// 패스워드 실패 시, 현재 DB에 저장된 fail count가 5라면 잠김
+					if(userFailCnt >= 5){
+						resultCode = "9995";
+						resultMsg = "사용자 패스워드 실패 횟수 초과입니다. 계정이 잠깁니다.";
+						lockFlag = "Y";
+						failCntFlag = "Y";
+					}else{
+						resultCode = "9998";
+						resultMsg = "사용자 계정정보가 올바르지 않습니다.";
+						failCntFlag = "Y";
+					}
+
+				}else if(nowTimeStamp > sixtyDaysAfterDbInitTimestamp){
+					if(nowTimeStamp < nintyDaysAfterDbInitTimestamp){
+						resultCode = "9997";
+						resultMsg = "패스워드 초기화 일자가 60일이 지났습니다. 패스워드를 변경 해 주세요.";
+					}else{
+						resultCode = "9996";
+						resultMsg = "패스워드 초기화 일자가 90일이 지났습니다. 계정이 잠깁니다.";
+						lockFlag = "Y";
+					}
+				}else{
+					resultCode = "0000";
+				}
+			}
+
+			// Action
+			if("0000".equals(resultCode) || "9997".equals(resultCode)){
+				// 정상 또는 패스워드 초기일자 알람 PASS
+				model.addAttribute("user", userInfo);
+				model.addAttribute("userId", userInfo.getUserId());
+				model.addAttribute("userNm", userInfo.getUserNm());
+			}else{
+				// 계정 잠김 처리
+				if("Y".equals(lockFlag)){
+					vo.setUserPw("");
+					vo.setLockFlag("Y");
+					UserInfoService.updateUserInfo(vo);
+				}
+
+				// 실패횟수 증가 처리
+				if("Y".equals(failCntFlag)){
+					++userFailCnt;
+					vo.setUserPw("");
+					vo.setFailCnt(userFailCnt);
+					UserInfoService.updateUserInfo(vo);
+				}
+
+				// 메시지 출력
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('" + resultMsg + "'); location.href='/user/login';</script>");
+				out.flush();
+			}
+		}catch(Exception e){
+			e.getStackTrace();
 		}
+	}
 
-		model.addAttribute("user", userInfo);
+
+	// 로그아웃
+	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) throws Exception {
+		session.invalidate();
+
+		return "/user/login";
 	}
 
 
@@ -58,14 +174,14 @@ public class UserInfoController {
 
 	// 회원등록
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
-	public String insertUserInfo(UserInfoVO vo, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+	public ResultVO insertUserInfo(UserInfoVO vo, RedirectAttributes redirectAttributes) {
 
 		String hashedPw = BCrypt.hashpw(vo.getUserPw(), BCrypt.gensalt());						// pw hash 암호화
 		vo.setUserPw(hashedPw);																	// hashed password 세팅
-		UserInfoService.insertUserInfo(vo);
-		redirectAttributes.addFlashAttribute("msg", this.getSuccessCode().get("msg"));
+		int result = UserInfoService.insertUserInfo(vo);
 
-		return "/user/login";
+		return MessageUtil.getMessage(result);
 	}
 
 	// 회원정보 상세 초기화면
@@ -80,36 +196,14 @@ public class UserInfoController {
 	// 회원정보 수정
 	@RequestMapping(value = "/user/info/modify", method = { RequestMethod.POST })
 	@ResponseBody
-	public ResultVO updateUserInfo(Model model, UserInfoVO vo, ResultVO rvo) {
+	public ResultVO updateUserInfo(HttpSession session, Model model, UserInfoVO vo, ResultVO rvo) {
 
-		try {
-			int result = UserInfoService.updateUserInfo(vo);
-			if(result > 0){
-				rvo.setResultCd("0000");
-                rvo.setResultMsg("성공하였습니다.");
-			}
-		} catch (Throwable e) {
-			logger.warn(ExceptionUtils.getStackTrace(e));
-		}
+		vo.setUserId(session.getAttribute("userId").toString());
+		String hashedPw = BCrypt.hashpw(vo.getUserPw(), BCrypt.gensalt());						// pw hash 암호화
+		vo.setUserPw(hashedPw);																	// hashed password 세팅
 
-		return rvo;
-	}
+		int result = UserInfoService.updateUserInfo(vo);
 
-	private Map<String, Object> getSuccessCode() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-
-		//JsonObject result = new JsonObject();
-		map.put("code", "1");
-		map.put("msg", "success");
-		return map;
-	}
-
-	private Map<String, String> getFailCode(String msg) {
-		Map<String, String> result = new HashMap<String, String>();
-
-		//JsonObject result = new JsonObject();
-		result.put("code", "-1");
-		result.put("msg", "fail");
-		return result;
+		return MessageUtil.getMessage(result);
 	}
 }

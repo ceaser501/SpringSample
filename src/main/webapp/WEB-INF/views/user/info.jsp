@@ -222,7 +222,7 @@
     <div class="modal fade" id="myInfoMod">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form role="form" id="userInfoModForm" action="/user/info/modify" name="userInfoModForm" method="post">
+                <form role="form" id="userInfoModForm" name="userInfoModForm">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span></button>
@@ -252,7 +252,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="submit" class="btn btn-primary myInfoModBtn" id="myInfoModBtn">수정 저장</button>
+                        <button type="button" class="btn btn-primary myInfoModBtn" id="myInfoModBtn">수정 저장</button>
                     </div>
                 </form>
             </div>
@@ -365,21 +365,35 @@
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
     $(document).ready(function () {
-        $('#myInfoModBtn').validate({
-            rules : {},
-            submitHandler : function(f){
-                $.ajax({
-                    url: f.action,
-                    type: f.method,
-                    contentType:"application/json; charset=UTF-8",
-                    data: $(f).serialize(),
-                    dataType : 'json',
-                    success: function(data){
-                        alert(data.result_msg);
-                    }
-                });
-            }
+        $('#myInfoModBtn').on('click', function(){
+
+            $.ajax({
+                url: '/user/info/modify',
+                type: 'POST',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: $("#userInfoModForm").serialize(),
+                dataType : 'json',
+                success: function(data){
+                    alert(data.resultMsg);
+                }
+            });
         });
+
+        // $('#myInfoModBtn').validate({
+        //     rules : {},
+        //     submitHandler : function(f){
+        //         $.ajax({
+        //             url: f.action,
+        //             type: f.method,
+        //             contentType:"application/json; charset=UTF-8",
+        //             data: $(f).serialize(),
+        //             dataType : 'json',
+        //             success: function(data){
+        //                 alert(data.result_msg);
+        //             }
+        //         });
+        //     }
+        // });
     });
 </script>
 </body>

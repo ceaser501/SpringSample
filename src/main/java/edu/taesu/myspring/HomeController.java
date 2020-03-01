@@ -36,10 +36,10 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String login(Locale locale, Model model) {
-		
+
 		return "/user/login";
 	}
-	
+
 	@RequestMapping(value = "/user/home", method = RequestMethod.GET)
 	public String home(Locale locale, HttpSession session, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -54,11 +54,12 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate);
 		model.addAttribute("login", session.getAttribute("login"));
 
-		return "/home";
+        return "/home";
 	}
-	
+
 
 	@RequestMapping(value = "/getList", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
 	public List<String> getData() {
 		List<String> result = new ArrayList<>();
 		result.add("first");
